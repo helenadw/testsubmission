@@ -1,0 +1,167 @@
+/* TODO: 
+- clean up any unused styles
+- fix styling of free gift tag so that it matches the design
+- fix styling of the avatar so that it matches the design
+*/
+
+.deliveryCard {
+  position: relative;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: 550px;
+  margin: 0 auto;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.freeGiftTag {
+  position: absolute;
+  top: -5px;
+  right: -25px;
+  background-color: #f9a8d4;
+  color: #000;
+  padding: 4px 30px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transform: rotate(45deg);
+  z-index: 2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.avatarSection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #f3f4f6;
+  background-image: url('../cat.jpg');
+  background-size: cover;
+  background-position: center;
+  border: 3px solid white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.deliveryInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.deliveryTitle {
+  color: #4b7f52;
+  font-size: 20px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.deliveryMessage {
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+
+.priceInfo {
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+}
+
+.seeDetailsButton {
+  background-color: #4b7f52;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.editDeliveryButton {
+  background-color: white;
+  color: #4b7f52;
+  border: 1px solid #4b7f52;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.imageSection {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  max-height: 180px;
+  margin-bottom: 15px;
+}
+
+.catImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .deliveryCard {
+    flex-direction: row;
+    text-align: left;
+    padding: 0;
+  }
+
+  .avatarSection {
+    display: none;
+  }
+
+  .imageSection {
+    width: 40%;
+    border-radius: 8px 0 0 8px;
+    max-height: none;
+    margin-bottom: 0;
+  }
+
+  .deliveryInfo {
+    align-items: flex-start;
+    text-align: left;
+    padding: 20px;
+  }
+
+  .freeGiftTag {
+    top: -10px;
+    right: -10px;
+  }
+
+  .actionButtons {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 767px) {
+  .freeGiftTag {
+    bottom: auto;
+    top: -10px;
+    right: -10px;
+  }
+}
