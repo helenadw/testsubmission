@@ -1,42 +1,6 @@
+import { useState, useEffect } from 'react';
 import styles from './nextDelivery.module.css';
-
-/**
- * TODO: Re-implement API fetching once the 404 error is resolved.
- * Currently, the API will return data from a curl request, e.g., curl http://localhost:3000/your-next-delivery/ff535484-6880-4653-b06e-89983ecf4ed5
- * but will return a 404 error when accessed via the browser.
- *
- * Future implementation could use the following, or alternatively use a library like Axios:
- *
- * import { useState, useEffect } from 'react';
- *
- * const [delivery, setDelivery] = useState<Delivery | null>(null);
- * const [loading, setLoading] = useState<boolean>(true);
- * const [error, setError] = useState<string | null>(null);
- *
- * useEffect(() => {
- *   const fetchDelivery = async () => {
- *     try {
- *       setLoading(true);
- *       const response = await fetch(`http://localhost:3000/comms/your-next-delivery/${deliveryId}`);
- *
- *       if (!response.ok) {
- *         throw new Error(`Error: ${response.status}`);
- *       }
- *
- *       const data = await response.json();
- *       setDelivery(data);
- *       setError(null);
- *     } catch (err) {
- *       setError(err instanceof Error ? err.message : 'An unknown error occurred');
- *       setDelivery(null);
- *     } finally {
- *       setLoading(false);
- *     }
- *   };
- *
- *   fetchDelivery();
- * }, [deliveryId]);
- */
+import axios from 'axios';
 
 type PouchSize = 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 
@@ -64,34 +28,55 @@ interface Delivery {
   cats: Cat[];
 }
 
-function DeliveryDetails() {
-  // Hardcoded delivery data to use for now
-  const delivery: Delivery = {
-    id: 'ff535484-6880-4653-b06e-89983ecf4ed5',
-    firstName: 'Kayleigh',
-    lastName: 'Wilderman',
-    email: 'Kayleigh_Wilderman@hotmail.com',
-    cats: [
-      {
-        name: 'Dorian',
-        subscriptionActive: true,
-        breed: 'Thai',
-        pouchSize: 'C',
-      },
-      {
-        name: 'Ocie',
-        subscriptionActive: true,
-        breed: 'Somali',
-        pouchSize: 'F',
-      },
-      {
-        name: 'Eldridge',
-        subscriptionActive: false,
-        breed: 'Himalayan',
-        pouchSize: 'A',
-      },
-    ],
-  };
+export const DeliveryDetails = ({ deliveryId }: { deliveryId: string }) => {
+  const [delivery, setDelivery] = useState<Delivery | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // fetching data from hardcoded example id
+  useEffect(() => {
+    const fetchDelivery = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `http://localhost:3000/comms/your-next-delivery/${'ff535484-6880-4653-b06e-89983ecf4ed5'}`,
+        );
+        setDelivery(response.data);
+        setError(null);
+      } catch (err) {
+        setError(
+          axios.isAxiosError(err)
+            ? `Error: ${err.response?.status} - ${err.message}`
+            : 'An unknown error occurred',
+        );
+        console.error('Failed to fetch delivery information:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDelivery();
+  }, [deliveryId]);
+
+  if (loading) {
+    return (
+      <div className={styles.loading}>Loading your delivery information...</div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.error}>
+        Unable to load delivery information: {error}
+      </div>
+    );
+  }
+
+  if (!delivery) {
+    return (
+      <div className={styles.noData}>No delivery information available.</div>
+    );
+  }
 
   const activeCats = delivery.cats.filter((cat) => cat.subscriptionActive);
 
@@ -142,6 +127,6 @@ function DeliveryDetails() {
       </div>
     </div>
   );
-}
+};
 
 export default DeliveryDetails;

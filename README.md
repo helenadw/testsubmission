@@ -66,12 +66,7 @@ The frontend will be available at `http://localhost:5173` (Vite's default port).
 There are further improvements that could be made to the implementation, given more time. I have left comments in the code to expand further, and will recap here:
 
 - shared project.json file with set up to run the frontend and backend from one command
-- fix backend functionality
-  - the endpoint can be called with a curl request to receive the expected data, but currently will 404 if called from the browser
-
-```
-curl http://localhost:3000/comms/your-next-delivery/ff535484-6880-4653-b06e-89983ecf4ed5
-```
+- currently we are returning data from one hardcoded id value
 
 - improve styling
   - improve 'free gift tag' to align with design
